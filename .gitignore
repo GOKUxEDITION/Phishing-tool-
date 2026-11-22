@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+phishing_lab.sqlite3
+lab_events.sqlite3
+.env
