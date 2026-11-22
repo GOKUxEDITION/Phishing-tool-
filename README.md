@@ -1,27 +1,30 @@
-# Phishing Lab · Threat Console (v2)
+# Phishing-tool- · 90X Defensive Suite
 
-Local defensive toolkit for URL triage and awareness scenarios. It does not harvest credentials, OTPs, cookies, session tokens, or clone real provider login pages.
+Local defensive triage tools, designed for Termux/Linux. No credential harvesting, OTP/session capture, stealth, login impersonation, or automated fetching of submitted URLs.
 
-## Features
-- Single URL heuristic scan
-- Batch analysis (up to 25 URLs)
-- URL risk score with findings
-- Punycode, IP-host, shortener, deep-subdomain, user-info, nonstandard-port and keyword indicators
-- CSV event export and JSON event API
-- Local click-only awareness scenario
-- SQLite event log
-- Runs on loopback only (127.0.0.1)
+## Modules
+- URL heuristic analysis and batch scanning
+- Raw email/header triage: Reply-To mismatch, supplied Authentication-Results hints, URL analysis, suspicious attachment extensions
+- IOC extraction: URLs, IPv4 strings, domains
+- Local awareness simulation (click-only)
+- SQLite event history
+- CSV and JSON exports
+- Loopback-only Flask server
 
-## Install & run (Termux/Linux)
+## Install (Termux)
 ```bash
 git clone https://github.com/GOKUxEDITION/Phishing-tool-.git
 cd Phishing-tool-
+pkg install python -y
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
-Visit http://127.0.0.1:5000
+Browse http://127.0.0.1:5000
 
-## Notes
-The scanner does not open/fetch submitted URLs, avoiding SSRF and remote interaction. Scores are heuristic indicators and must not be treated as definitive verdicts.
+## Email triage
+Paste raw message/header text into the UI. Authentication-Results is parsed as a supplied claim and is not independently validated. Strip personal information before using.
+
+## Safety and limits
+Submitted URLs are parsed only; the suite does not fetch them. IOC extraction is text-based, and extracted IP/domain strings are not validated against live threat intelligence. Heuristic scores are not a verdict.
