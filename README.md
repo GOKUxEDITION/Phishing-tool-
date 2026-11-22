@@ -1,22 +1,27 @@
-# Phishing Lab & URL Threat Analyzer
+# Phishing Lab · Threat Console (v2)
 
-A local-only phishing-awareness lab and URL risk analyzer. It **does not collect credentials, OTPs, cookies, session tokens, or impersonate real login providers**.
+Local defensive toolkit for URL triage and awareness scenarios. It does not harvest credentials, OTPs, cookies, session tokens, or clone real provider login pages.
 
 ## Features
-- Flask dashboard for URL risk analysis
-- Heuristic checks for suspicious URLs (IP hosts, punycode, URL shorteners, risky keywords, excessive subdomains, HTTP)
-- Local awareness simulation landing page with event logging (clicks only)
+- Single URL heuristic scan
+- Batch analysis (up to 25 URLs)
+- URL risk score with findings
+- Punycode, IP-host, shortener, deep-subdomain, user-info, nonstandard-port and keyword indicators
+- CSV event export and JSON event API
+- Local click-only awareness scenario
 - SQLite event log
-- Runs on localhost by default
+- Runs on loopback only (127.0.0.1)
 
-## Run (Termux/Linux)
+## Install & run (Termux/Linux)
 ```bash
+git clone https://github.com/GOKUxEDITION/Phishing-tool-.git
+cd Phishing-tool-
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
-Open http://127.0.0.1:5000
+Visit http://127.0.0.1:5000
 
-## Scope
-Use only for defensive analysis and awareness simulations. The simulation intentionally has no password/OTP input, credential storage, external deployment, stealth, or provider-brand cloning.
+## Notes
+The scanner does not open/fetch submitted URLs, avoiding SSRF and remote interaction. Scores are heuristic indicators and must not be treated as definitive verdicts.
