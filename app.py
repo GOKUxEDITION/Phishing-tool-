@@ -4,8 +4,19 @@ from datetime import datetime, timezone
 from flask import Flask, request, jsonify, render_template, Response
 from scanner import analyze_url
 from mailtools import analyze_email, extract_iocs
+from security import rate_limited, security_headers
 
 app=Flask(__name__)
+app.config['MAX_CONTENT_LENGTH']=256*1024
+
+@app.after_request
+def hardening(response):
+    return security_headers(response)
+
+@app.before_request
+def limit_api_requests():
+    if request.path.startswith('/api/') and rate_limited(request.remote_addr or 'unknown',limit=90,window=60):
+        return jsonify({'error':'Rate limit exceeded. Try again shortly.'}),429
 DB="lab_events.sqlite3"
 MAX_BATCH=50
 
